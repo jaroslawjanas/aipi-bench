@@ -1,0 +1,20 @@
+services:
+  aipi-bench:
+    build: .
+    ports:
+      - "${PORT:-3000}:3000"
+    volumes:
+      - bench-data:/app/data
+    environment:
+      - DATABASE_URL=file:/app/data/benchmarks.db
+      - API_BASE_URL=${API_BASE_URL:-http://host.docker.internal:11434/v1}
+      - API_KEY=${API_KEY:-}
+      - MODELS=${MODELS:-llama3}
+      - BENCHMARK_INTERVAL=${BENCHMARK_INTERVAL:-7200000}
+      - BENCHMARK_PROMPT=${BENCHMARK_PROMPT:-Write a 2000 word long story}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+
+volumes:
+  bench-data:

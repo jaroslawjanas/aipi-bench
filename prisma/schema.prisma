@@ -1,0 +1,23 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Result {
+  id              Int      @id @default(autoincrement())
+  model           String
+  timestamp       DateTime @default(now())
+  success         Boolean  @default(true)
+  ttftMs          Int?
+  tps             Float?
+  totalTimeMs     Int?
+  tokensGenerated Int?
+  promptSent      String?
+  errorMessage    String?
+
+  @@index([model, timestamp])
+}
