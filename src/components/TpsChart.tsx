@@ -47,7 +47,7 @@ export default function TpsChart({ data }: TpsChartProps) {
 
   return (
     <div className="bg-bg-card rounded-xl border border-border p-4">
-      <h3 className="text-sm font-medium text-muted mb-3">{models.length === 1 ? models[0] : "TPS"} (tokens/sec)</h3>
+      <h3 className="text-sm font-medium text-muted mb-3">{models.length === 1 ? `${models[0]} — TPS` : "TPS"} (tokens/sec)</h3>
       <ResponsiveContainer width="100%" height={300}>
         <LineChart data={chartData}>
           <CartesianGrid strokeDasharray="3 3" stroke="#30363d" />

@@ -49,7 +49,7 @@ export default function TtftChart({ data }: TtftChartProps) {
 
   return (
     <div className="bg-bg-card rounded-xl border border-border p-4">
-      <h3 className="text-sm font-medium text-muted mb-3">{models.length === 1 ? models[0] : "TTFT"} (ms)</h3>
+      <h3 className="text-sm font-medium text-muted mb-3">{models.length === 1 ? `${models[0]} — TTFT` : "TTFT"} (ms)</h3>
       <ResponsiveContainer width="100%" height={300}>
         <LineChart data={chartData}>
           <CartesianGrid strokeDasharray="3 3" stroke="#30363d" />

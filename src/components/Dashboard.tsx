@@ -98,11 +98,11 @@ export default function Dashboard() {
               <p className="text-muted text-center py-8">Loading charts...</p>
             ) : (
               <div className="space-y-6">
-                <TtftChart data={Object.fromEntries(
-                  Object.entries(filteredChartData).map(([model, points]) => [model, points.map((p) => ({ timestamp: p.timestamp, ttft: p.ttft }))])
-                )} />
                 <TpsChart data={Object.fromEntries(
                   Object.entries(filteredChartData).map(([model, points]) => [model, points.map((p) => ({ timestamp: p.timestamp, tps: p.tps }))])
+                )} />
+                <TtftChart data={Object.fromEntries(
+                  Object.entries(filteredChartData).map(([model, points]) => [model, points.map((p) => ({ timestamp: p.timestamp, ttft: p.ttft }))])
                 )} />
               </div>
             )}
