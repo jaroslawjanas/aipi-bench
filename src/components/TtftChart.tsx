@@ -49,7 +49,7 @@ export default function TtftChart({ data }: TtftChartProps) {
 
   return (
     <div className="bg-bg-card rounded-xl border border-border p-4">
-      <h3 className="text-sm font-medium text-muted mb-3">{models.length === 1 ? `${models[0]} — TTFT` : "TTFT"} (ms)</h3>
+      <h3 className="text-sm font-medium text-muted mb-3">TTFT (ms)</h3>
       <ResponsiveContainer width="100%" height={300}>
         <LineChart data={chartData}>
           <CartesianGrid strokeDasharray="3 3" stroke="#30363d" />
@@ -64,7 +64,6 @@ export default function TtftChart({ data }: TtftChartProps) {
             contentStyle={{ backgroundColor: "#1c2128", border: "1px solid #30363d", borderRadius: "8px" }}
             labelFormatter={(v) => new Date(String(v)).toLocaleString()}
           />
-          <Legend />
           <Brush dataKey="timestamp" height={30} stroke="#58a6ff" tickFormatter={(v) => new Date(String(v)).toLocaleDateString(undefined, { month: "short", day: "numeric" })} />
           {models.map((model, i) => (
             <Line
