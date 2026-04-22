@@ -22,8 +22,8 @@ interface ChartDataResponse {
 }
 
 export default function Dashboard() {
-  const [period, setPeriod] = useState("7d");
-  const [chartPeriod, setChartPeriod] = useState("7d");
+  const [period, setPeriod] = useState("5hr");
+  const [chartPeriod, setChartPeriod] = useState("5hr");
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
   const [stats, setStats] = useState<ModelStats[]>([]);
   const [chartData, setChartData] = useState<Record<string, Array<{ timestamp: string; ttft: number | null; tps: number | null; time: number | null }>>>({});

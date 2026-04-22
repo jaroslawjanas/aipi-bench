@@ -6,9 +6,10 @@ interface PeriodSelectorProps {
 }
 
 const periods = [
-  { value: "24h", label: "24hr" },
-  { value: "7d", label: "7d" },
-  { value: "30d", label: "30d" },
+  { value: "now", label: "Now" },
+  { value: "5hr", label: "5hr" },
+  { value: "24hr", label: "24hr" },
+  { value: "3d", label: "3d" },
 ];
 
 export default function PeriodSelector({ period, onPeriodChange }: PeriodSelectorProps) {
