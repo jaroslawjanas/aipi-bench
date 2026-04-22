@@ -21,9 +21,22 @@ interface ChartDataResponse {
   models: Record<string, Array<{ timestamp: string; ttft: number | null; tps: number | null; time: number | null }>>;
 }
 
+const tablePeriods = [
+  { value: "now", label: "Now" },
+  { value: "5hr", label: "5hr" },
+  { value: "24hr", label: "24hr" },
+  { value: "3d", label: "3d" },
+];
+
+const chartPeriods = [
+  { value: "24hr", label: "24hr" },
+  { value: "3d", label: "3d" },
+  { value: "7d", label: "7d" },
+];
+
 export default function Dashboard() {
   const [period, setPeriod] = useState("5hr");
-  const [chartPeriod, setChartPeriod] = useState("5hr");
+  const [chartPeriod, setChartPeriod] = useState("24hr");
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
   const [stats, setStats] = useState<ModelStats[]>([]);
   const [chartData, setChartData] = useState<Record<string, Array<{ timestamp: string; ttft: number | null; tps: number | null; time: number | null }>>>({});
@@ -84,7 +97,7 @@ export default function Dashboard() {
       <div className="max-w-6xl mx-auto px-4 py-8">
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-2xl font-bold">AIPI Bench</h1>
-          <PeriodSelector period={period} onPeriodChange={setPeriod} />
+          <PeriodSelector period={period} onPeriodChange={setPeriod} periods={tablePeriods} />
         </div>
 
         <div className="bg-bg-card rounded-xl border border-border p-6 mb-6">
@@ -99,7 +112,7 @@ export default function Dashboard() {
           <div className="space-y-6">
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-semibold">{displayName}</h2>
-              <PeriodSelector period={chartPeriod} onPeriodChange={setChartPeriod} />
+              <PeriodSelector period={chartPeriod} onPeriodChange={setChartPeriod} periods={chartPeriods} />
             </div>
             {loading ? (
               <p className="text-muted text-center py-8">Loading charts...</p>

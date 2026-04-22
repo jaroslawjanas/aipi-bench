@@ -2,13 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 
 const PERIOD_MS: Record<string, number> = {
-  "5hr": 5 * 60 * 60 * 1000,
   "24hr": 24 * 60 * 60 * 1000,
   "3d": 3 * 24 * 60 * 60 * 1000,
+  "7d": 7 * 24 * 60 * 60 * 1000,
 };
 
 export async function GET(request: NextRequest) {
-  const period = request.nextUrl.searchParams.get("period") || "5hr";
+  const period = request.nextUrl.searchParams.get("period") || "24hr";
 
   if (period === "now") {
     const recent = await prisma.result.findMany({
@@ -47,7 +47,7 @@ export async function GET(request: NextRequest) {
 
   const ms = PERIOD_MS[period];
   if (!ms) {
-    return NextResponse.json({ error: "Invalid period. Use now, 5hr, 24hr, or 3d." }, { status: 400 });
+    return NextResponse.json({ error: "Invalid period. Use now, 24hr, 3d, or 7d." }, { status: 400 });
   }
 
   const since = new Date(Date.now() - ms);
