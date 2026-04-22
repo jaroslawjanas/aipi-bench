@@ -23,6 +23,7 @@ export async function GET(request: NextRequest) {
         ttftMs: true,
         tps: true,
         totalTimeMs: true,
+        timestamp: true,
       },
     });
 
