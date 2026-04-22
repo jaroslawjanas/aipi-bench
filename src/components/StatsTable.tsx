@@ -7,6 +7,9 @@ interface StatsTableProps {
   stats: ModelStats[];
   selectedKey?: string | null;
   onRowClick?: (key: string) => void;
+  sortField?: string | null;
+  sortDirection?: "asc" | "desc";
+  onSort?: (field: string) => void;
 }
 
 function formatSeconds(ms: number | null): string {
@@ -18,9 +21,34 @@ function entryKey(stats: ModelStats): string {
   return `${stats.provider}|${stats.model}`;
 }
 
-export default function StatsTable({ stats, selectedKey, onRowClick }: StatsTableProps) {
+function SortIndicator({
+  field,
+  activeField,
+  direction,
+}: {
+  field: string;
+  activeField?: string | null;
+  direction?: "asc" | "desc";
+}) {
+  if (activeField !== field) {
+    return <span className="inline-block w-3 ml-1 text-muted/30 select-none">⇅</span>;
+  }
+  return (
+    <span className="inline-block w-3 ml-1 text-accent-blue select-none">
+      {direction === "asc" ? "▲" : "▼"}
+    </span>
+  );
+}
+
+export default function StatsTable({ stats, selectedKey, onRowClick, sortField, sortDirection, onSort }: StatsTableProps) {
   if (stats.length === 0) {
     return <p className="text-muted text-center py-8">No data yet. Waiting for benchmark results...</p>;
+  }
+
+  function headerClass(field: string): string {
+    const base = "pb-3 pr-4 font-medium cursor-pointer select-none transition-colors hover:text-text-primary";
+    if (sortField === field) return `${base} text-text-primary`;
+    return base;
   }
 
   return (
@@ -28,12 +56,27 @@ export default function StatsTable({ stats, selectedKey, onRowClick }: StatsTabl
       <table className="w-full text-sm">
         <thead>
           <tr className="border-b border-border text-left text-muted">
-            <th className="pb-3 pr-4 font-medium">Provider</th>
-            <th className="pb-3 pr-4 font-medium">Model</th>
-            <th className="pb-3 pr-4 font-medium">Overall %</th>
-            <th className="pb-3 pr-4 font-medium">TTFT <span className="text-muted text-xs font-normal">avg (med)</span></th>
-            <th className="pb-3 pr-4 font-medium">TPS <span className="text-muted text-xs font-normal">avg (med)</span></th>
-            <th className="pb-3 font-medium">Time <span className="text-muted text-xs font-normal">avg (med)</span></th>
+            <th className={headerClass("provider")} onClick={() => onSort?.("provider")}>
+              Provider <SortIndicator field="provider" activeField={sortField} direction={sortDirection} />
+            </th>
+            <th className={headerClass("model")} onClick={() => onSort?.("model")}>
+              Model <SortIndicator field="model" activeField={sortField} direction={sortDirection} />
+            </th>
+            <th className={headerClass("overall")} onClick={() => onSort?.("overall")}>
+              Overall % <SortIndicator field="overall" activeField={sortField} direction={sortDirection} />
+            </th>
+            <th className={headerClass("ttft")} onClick={() => onSort?.("ttft")}>
+              TTFT <span className="text-muted text-xs font-normal">avg (med)</span>{" "}
+              <SortIndicator field="ttft" activeField={sortField} direction={sortDirection} />
+            </th>
+            <th className={headerClass("tps")} onClick={() => onSort?.("tps")}>
+              TPS <span className="text-muted text-xs font-normal">avg (med)</span>{" "}
+              <SortIndicator field="tps" activeField={sortField} direction={sortDirection} />
+            </th>
+            <th className={headerClass("time")} onClick={() => onSort?.("time")}>
+              Time <span className="text-muted text-xs font-normal">avg (med)</span>{" "}
+              <SortIndicator field="time" activeField={sortField} direction={sortDirection} />
+            </th>
           </tr>
         </thead>
         <tbody>
