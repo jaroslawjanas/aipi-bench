@@ -1,6 +1,6 @@
 export interface SSEChunk {
   choices?: Array<{
-    delta: { content?: string; role?: string };
+    delta: { content?: string; role?: string; reasoning?: string; reasoning_content?: string };
     finish_reason?: string | null;
   }>;
   usage?: { prompt_tokens?: number; completion_tokens?: number; total_tokens?: number };

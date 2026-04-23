@@ -57,7 +57,7 @@ export async function runBenchmark(
     let ttftMs: number | null = null;
     let content = "";
     let tokensGenerated: number | null = null;
-    let firstContentChunk = true;
+    let firstTokenReceived = false;
 
     for await (const chunk of parseSSEStream(response)) {
       if (onChunk) {
@@ -69,10 +69,14 @@ export async function runBenchmark(
       }
 
       const delta = chunk.choices?.[0]?.delta;
-      if (delta?.content && firstContentChunk) {
+      const tokenText = delta?.reasoning || delta?.reasoning_content || delta?.content;
+      if (!firstTokenReceived && tokenText) {
         ttftMs = Math.round(performance.now() - startTime);
-        firstContentChunk = false;
+        firstTokenReceived = true;
       }
+
+      if (delta?.reasoning) content += delta.reasoning;
+      else if (delta?.reasoning_content) content += delta.reasoning_content;
 
       if (delta?.content) content += delta.content;
 
