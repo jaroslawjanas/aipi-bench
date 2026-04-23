@@ -5,7 +5,7 @@ import Dashboard from "@/components/Dashboard";
 import CommunityBench from "@/components/CommunityBench";
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState<"home" | "community">("home");
+  const [activeTab, setActiveTab] = useState<"server" | "community">("server");
 
   return (
     <div className="min-h-screen bg-bg-primary text-text-primary">
@@ -14,14 +14,14 @@ export default function Home() {
           <h1 className="text-2xl font-bold">AIPI Bench</h1>
           <div className="flex gap-2">
             <button
-              onClick={() => setActiveTab("home")}
+              onClick={() => setActiveTab("server")}
               className={`px-4 py-2 rounded-lg font-medium text-sm transition-colors cursor-pointer
-                ${activeTab === "home"
+                ${activeTab === "server"
                   ? "bg-accent-blue text-white"
                   : "bg-bg-card text-muted hover:bg-border"
                 }`}
             >
-              Home
+              Server
             </button>
             <button
               onClick={() => setActiveTab("community")}
@@ -36,7 +36,7 @@ export default function Home() {
           </div>
         </div>
 
-        {activeTab === "home" ? <Dashboard /> : <CommunityBench />}
+        {activeTab === "server" ? <Dashboard /> : <CommunityBench />}
       </div>
     </div>
   );
