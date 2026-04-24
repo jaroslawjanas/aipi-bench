@@ -218,6 +218,13 @@ export default function Dashboard() {
             <img src="/discord-logo.png" alt="Discord" className="h-4 w-4" />
             Join Discord
           </a>
+          <span className="text-muted/30">|</span>
+          <a
+            href="/login"
+            className="inline-flex items-center gap-2 text-sm text-muted hover:text-text-primary transition-colors"
+          >
+            Log In
+          </a>
         </footer>
     </>
   );
