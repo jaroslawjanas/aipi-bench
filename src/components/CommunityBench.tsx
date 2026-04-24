@@ -411,10 +411,10 @@ export default function CommunityBench() {
             <div className="space-y-6">
               <TpsChart data={Object.fromEntries(
                 Object.entries(filteredChartData).map(([key, points]) => [key, points.map((p) => ({ timestamp: p.timestamp, tps: p.tps }))])
-              )} modelInfo={modelInfo} />
+              )} modelInfo={modelInfo} period={chartPeriod} />
               <TtftChart data={Object.fromEntries(
                 Object.entries(filteredChartData).map(([key, points]) => [key, points.map((p) => ({ timestamp: p.timestamp, ttft: p.ttft }))])
-              )} modelInfo={modelInfo} />
+              )} modelInfo={modelInfo} period={chartPeriod} />
             </div>
           )}
         </div>
