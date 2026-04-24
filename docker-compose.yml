@@ -4,11 +4,8 @@ services:
     ports:
       - "${PORT:-3000}:3000"
     volumes:
-      - bench-data:/app/data
+      - ./data:/app/data
       - ./config.json:/app/config.json:ro
     environment:
       - DATABASE_URL=file:/app/data/benchmarks.db
     restart: unless-stopped
-
-volumes:
-  bench-data:
