@@ -12,7 +12,9 @@ export async function GET(request: NextRequest) {
   const period = request.nextUrl.searchParams.get("period") || "5hr";
 
   if (period === "now") {
+    const since = new Date(Date.now() - 5 * 60 * 60 * 1000);
     const recent = await prisma.result.findMany({
+      where: { timestamp: { gte: since } },
       orderBy: { timestamp: "desc" },
       take: 500,
       select: {
@@ -38,8 +40,7 @@ export async function GET(request: NextRequest) {
     }
 
     const stats = computeStats(rows);
-    const from = rows.length > 0 ? rows[rows.length - 1].timestamp.toISOString() : new Date().toISOString();
-    return NextResponse.json({ period, from, to: new Date().toISOString(), models: stats });
+    return NextResponse.json({ period, from: since.toISOString(), to: new Date().toISOString(), models: stats });
   }
 
   const ms = PERIOD_MS[period];
