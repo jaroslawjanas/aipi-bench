@@ -6,12 +6,19 @@ import { prisma } from "./db";
 const SESSION_COOKIE = "session";
 const SESSION_MAX_AGE = 24 * 60 * 60; // 24 hours in seconds
 
-function getSecret(): Uint8Array {
+function validateJwtSecret(): void {
   const secret = process.env.ADMIN_JWT_SECRET;
-  if (!secret) {
-    console.warn("ADMIN_JWT_SECRET is not set. Using a random secret — sessions will not survive restarts.");
+  if (!secret || secret.length < 32) {
+    throw new Error(
+      "ADMIN_JWT_SECRET must be set and at least 32 characters long. " +
+      "Generate one with: node -e \"console.log(require('crypto').randomBytes(32).toString('hex'))\""
+    );
   }
-  return new TextEncoder().encode(secret || randomBytes(32).toString("hex"));
+}
+validateJwtSecret();
+
+function getSecret(): Uint8Array {
+  return new TextEncoder().encode(process.env.ADMIN_JWT_SECRET!);
 }
 
 export function hashPassword(password: string): string {

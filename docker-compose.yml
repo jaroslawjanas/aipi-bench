@@ -8,6 +8,6 @@ services:
       - ./config.json:/app/config.json:ro
     environment:
       - DATABASE_URL=file:/app/data/benchmarks.db
-      - ADMIN_JWT_SECRET=${ADMIN_JWT_SECRET}
+      - ADMIN_JWT_SECRET=${ADMIN_JWT_SECRET:?ADMIN_JWT_SECRET must be set}
       - COOKIE_SECURE=${COOKIE_SECURE:-false}
     restart: unless-stopped
