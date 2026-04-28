@@ -2,5 +2,6 @@ import { NextResponse } from "next/server";
 import { config } from "@/lib/config";
 
 export async function GET() {
-  return NextResponse.json({ entries: config.entries });
+  const safeEntries = config.entries.map(({ apiKey, ...rest }) => rest);
+  return NextResponse.json({ entries: safeEntries });
 }
