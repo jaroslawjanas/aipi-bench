@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
     const seen = new Set<string>();
     const results = [];
     for (const r of recent) {
-      const key = `${r.provider}|${r.model}`;
+      const key = `${r.provider}|${r.model.toLowerCase()}`;
       if (!seen.has(key)) {
         seen.add(key);
         results.push(r);
@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
     const byKey: Record<string, Array<{ timestamp: string; ttft: number | null; tps: number | null; time: number | null }>> = {};
 
     for (const r of results) {
-      const key = `${r.provider}|${r.model}`;
+      const key = `${r.provider}|${r.model.toLowerCase()}`;
       if (!byKey[key]) byKey[key] = [];
       byKey[key].push({
         timestamp: r.timestamp.toISOString(),
@@ -60,7 +60,7 @@ export async function GET(request: NextRequest) {
   const byKey: Record<string, Array<{ timestamp: string; ttft: number | null; tps: number | null; time: number | null }>> = {};
 
   for (const r of results) {
-    const key = `${r.provider}|${r.model}`;
+    const key = `${r.provider}|${r.model.toLowerCase()}`;
     if (!byKey[key]) byKey[key] = [];
     byKey[key].push({
       timestamp: r.timestamp.toISOString(),

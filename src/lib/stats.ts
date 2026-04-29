@@ -36,7 +36,7 @@ export function computeStats(
   const byKey = new Map<string, typeof rows>();
 
   for (const row of rows) {
-    const key = `${row.provider}|${row.model}`;
+    const key = `${row.provider}|${row.model.toLowerCase()}`;
     const existing = byKey.get(key) || [];
     existing.push(row);
     byKey.set(key, existing);

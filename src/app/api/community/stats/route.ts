@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
     const seen = new Set<string>();
     const rows = [];
     for (const r of recent) {
-      const key = `${r.provider}|${r.model}`;
+      const key = `${r.provider}|${r.model.toLowerCase()}`;
       if (!seen.has(key)) {
         seen.add(key);
         rows.push(r);

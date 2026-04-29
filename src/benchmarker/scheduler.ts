@@ -46,7 +46,7 @@ async function runEntry(state: ScheduleState) {
     await prisma.result.create({
       data: {
         provider: entry.provider,
-        model: entry.model,
+        model: entry.model.toLowerCase(),
         alias: entry.alias,
         success: result.success,
         ttftMs: result.ttftMs,

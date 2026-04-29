@@ -65,7 +65,7 @@ export async function POST(request: NextRequest) {
           await prisma.communityResult.create({
             data: {
               provider: entry.provider,
-              model: entry.model,
+              model: entry.model.toLowerCase(),
               alias: entry.alias,
               ttftMs: result.ttftMs,
               tps: result.tps,
